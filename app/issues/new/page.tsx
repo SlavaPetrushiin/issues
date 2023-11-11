@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 import { issueFormSchema } from "./../../api/issues/route"
+import ErrorMessage from '@/app/components/ErrorMessage';
 import 'easymde/dist/easymde.min.css';
 
 type IFormInput = z.infer<typeof issueFormSchema>
@@ -53,13 +54,7 @@ const NewIssuePage = () => {
 						{...register("title")}
 					/>
 				</TextField.Root>
-				{errors.title && errors.title.message && (
-					<Callout.Root color='red'>
-						<Callout.Text>
-							{errors.title.message}
-						</Callout.Text>
-					</Callout.Root>
-				)}
+				<ErrorMessage> {errors.title?.message}</ErrorMessage>
 				<Controller
 					name="description"
 					control={control}
@@ -67,13 +62,7 @@ const NewIssuePage = () => {
 						<SimpleMDE placeholder="Description" {...field} />
 					)}
 				/>
-				{errors.description && errors.description.message && (
-					<Callout.Root color='red'>
-						<Callout.Text>
-							{errors.description.message}
-						</Callout.Text>
-					</Callout.Root>
-				)}
+				<ErrorMessage> {errors.description?.message}</ErrorMessage>
 				<Button>Submit new issue</Button>
 			</form>
 		</div>
