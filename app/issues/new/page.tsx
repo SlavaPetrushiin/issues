@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 import { issueFormSchema } from "./../../api/issues/route"
 import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
 import 'easymde/dist/easymde.min.css';
 
 type IFormInput = z.infer<typeof issueFormSchema>
@@ -16,6 +17,7 @@ type IFormInput = z.infer<typeof issueFormSchema>
 const NewIssuePage = () => {
 	const router = useRouter();
 	const [error, setError] = useState('');
+	const [isSubmitting, setSubmitting] = useState(false);
 	const { register, handleSubmit, control, formState: { errors } } = useForm<IFormInput>({
 		resolver: zodResolver(issueFormSchema),
 		defaultValues: {
@@ -26,6 +28,7 @@ const NewIssuePage = () => {
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		try {
+			setSubmitting(true)
 			const result = await axios.post('/api/issues/', data);
 
 			if (result.status != 201) {
@@ -35,6 +38,8 @@ const NewIssuePage = () => {
 			router.push('/issues');
 		} catch (error) {
 			setError("An unexpected error");
+		} finally {
+			setSubmitting(false);
 		}
 	}
 
@@ -63,7 +68,10 @@ const NewIssuePage = () => {
 					)}
 				/>
 				<ErrorMessage> {errors.description?.message}</ErrorMessage>
-				<Button>Submit new issue</Button>
+				<Button disabled={isSubmitting}>
+					Submit new issue
+					{isSubmitting && <Spinner />}
+				</Button>
 			</form>
 		</div>
 
