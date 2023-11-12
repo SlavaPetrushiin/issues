@@ -6,7 +6,6 @@ export default function Loading() {
 	const count = new Array(5).fill("");
 	return (
 		<div>
-
 			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
