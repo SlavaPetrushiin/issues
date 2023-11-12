@@ -20,20 +20,27 @@ const IssuesPage = async () => {
 			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
-						<Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-						<Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-						<Table.ColumnHeaderCell>Created</Table.ColumnHeaderCell>
+						<Table.ColumnHeaderCell>
+							Title
+						</Table.ColumnHeaderCell>
+						<Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
+						<Table.ColumnHeaderCell className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
 					{issues.map(issue => {
 						return (
 							<Table.Row key={issue.id}>
-								<Table.RowHeaderCell>{issue.title}</Table.RowHeaderCell>
-								<Table.Cell>
+								<Table.RowHeaderCell>
+									{issue.title}
+									<div className={'block mt-1 md:hidden'}>
+										<IssueStatusBadge status={issue.status} />
+									</div>
+								</Table.RowHeaderCell>
+								<Table.Cell className='hidden md:table-cell'>
 									<IssueStatusBadge status={issue.status} />
-								</Table.Cell>
-								<Table.Cell>{issue.createdAt.toLocaleDateString()}</Table.Cell>
+								</Table.Cell >
+								<Table.Cell className='hidden md:table-cell'>{issue.createdAt.toLocaleDateString()}</Table.Cell>
 							</Table.Row>
 						)
 					})}
