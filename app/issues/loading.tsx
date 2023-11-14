@@ -1,11 +1,13 @@
 import { Table } from '@radix-ui/themes'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import IssueActions from './_componets/IssueActions';
 
 export default function Loading() {
 	const count = new Array(5).fill("");
 	return (
 		<div>
+			<IssueActions />
 			<Table.Root variant="surface">
 				<Table.Header>
 					<Table.Row>
