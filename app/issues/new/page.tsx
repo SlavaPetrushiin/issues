@@ -8,8 +8,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
 import { issueFormSchema } from "./../../api/issues/route"
-import ErrorMessage from '@/app/components/ErrorMessage';
-import Spinner from '@/app/components/Spinner';
+import {ErrorMessage, Spinner} from '@/app/components';
 import 'easymde/dist/easymde.min.css';
 
 type IFormInput = z.infer<typeof issueFormSchema>

@@ -1,7 +1,6 @@
 import { Table } from '@radix-ui/themes'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import IssueActions from './_componets/IssueActions';
+import IssueActions from './_components/IssueActions';
+import {Skeleton} from '@/app/components'
 
 export default function Loading() {
 	const count = new Array(5).fill("");
