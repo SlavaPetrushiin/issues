@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
-import { issueFormSchema } from "./../../api/issues/route"
+import { issueFormSchema } from "@/app/validationSchemas";
 import { ErrorMessage, Spinner } from '@/app/components';
 import { Issue } from '@prisma/client';
 import dynamic from 'next/dynamic'
