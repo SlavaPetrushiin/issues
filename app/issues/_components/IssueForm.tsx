@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Button, Callout, TextField } from '@radix-ui/themes'
 import { Controller, useForm } from 'react-hook-form'
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
@@ -26,10 +26,16 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			setSubmitting(true)
-			const result = await axios.post('/api/issues/', data);
+			setSubmitting(true);
+			let response: AxiosResponse<Issue>;
 
-			if (result.status != 201) {
+			if(issue){
+				response  = await axios.patch<Issue>('/api/issues/' + issue.id, data);
+			} else {
+				response  = await axios.post<Issue>('/api/issues/', data);
+			}
+
+			if (!response.data) {
 				throw new Error();
 			}
 
