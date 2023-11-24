@@ -4,8 +4,10 @@ import React from 'react';
 import { AiFillBug } from 'react-icons/ai';
 import { usePathname } from "next/navigation";
 import classNames from 'classnames';
+import { useSession } from 'next-auth/react';
 
 const NavBar = () => {
+	const { data: session } = useSession()
 	const currentPath = usePathname();
 	const links = [
 		{ label: "Dashboard", href: "/" },
@@ -36,7 +38,9 @@ const NavBar = () => {
 						</Link>
 					)
 				})}
-			</ul>
+			</ul>			
+			{ session && <Link href="/api/auth/signout">Sign out</Link>}
+			{ !session && <Link href="/api/auth/signin">SignIn</Link>}
 		</nav>
 	)
 }
