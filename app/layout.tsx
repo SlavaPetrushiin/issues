@@ -4,7 +4,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import NavBar from './NavBar'
-import { Theme } from '@radix-ui/themes';
+import { Container, Theme } from '@radix-ui/themes';
 import AuthProvider from './providers/AuthProvider'
 
 const inter = Inter({
@@ -29,7 +29,7 @@ export default function RootLayout({
           <Theme>
             <NavBar />
             <main className='p-5'>
-              {children}
+              <Container>{children}</Container>
             </main>
           </Theme>
         </AuthProvider>
