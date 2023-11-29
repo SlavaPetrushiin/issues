@@ -6,6 +6,7 @@ import EditIssueButton from "./../_components/EditIssueButton"
 import DeleteIssueButton from '../_components/DeleteIssueButton'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/configs/authOptions'
+import { AssigneeSelect } from '../_components/AssigneeSelect'
 
 const IssueDetailPage = async ({ params }: { params: { id: string } }) => {
 	if (Number.isNaN(+params.id)) notFound()
@@ -26,6 +27,7 @@ const IssueDetailPage = async ({ params }: { params: { id: string } }) => {
 				<IssueDetails issue={issue} />
 			</Box>
 			{session && <Flex gap="3" direction="column">
+				<AssigneeSelect />
 				<EditIssueButton  issueId={issue.id} />
 				<DeleteIssueButton issueId={issue.id}/>
 			</Flex>}
