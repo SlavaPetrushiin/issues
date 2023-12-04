@@ -17,14 +17,14 @@ enum Status {
 }
 
 model Issue {
-  id             Int      @id @default(autoincrement())
-  title          String   @db.VarChar(255)
-  description    String   @db.Text
-  status         Status   @default(OPEN)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  assignedUserId String?  @db.VarChar(255)
-  assinedUser    User?    @relation(fields: [assignedUserId], references: [id])
+  id               Int      @id @default(autoincrement())
+  title            String   @db.VarChar(255)
+  description      String   @db.Text
+  status           Status   @default(OPEN)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  assignedToUserId String?  @db.VarChar(255)
+  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
 }
 
 model Account {
@@ -65,7 +65,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  assignIssues  Issue[]
+  assignedIssues  Issue[]  
 }
 
 model VerificationToken {
