@@ -1,7 +1,15 @@
-import Image from 'next/image'
+import Pagging from './components/Pagging'
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams: { page: string }
+}) {
+  const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+
   return (
-    <div>Hello</div>
+    <div>
+      <Pagging currentPage={currentPage} pageSize={10} itemCount={100} />
+    </div>
   )
 }
