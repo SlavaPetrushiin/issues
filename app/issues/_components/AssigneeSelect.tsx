@@ -7,27 +7,22 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import toast, { Toaster } from 'react-hot-toast';
 
-export const AssigneeSelect = ({issue}: {issue: Issue}) => {
-	const { data: users, error, isLoading } = useQuery<User[]>({
-		queryKey: ['user'],
-		queryFn: () => axios.get("/api/users").then(res => res.data),
-		staleTime: 60 * 1000,
-		retry: 3
-	});
+export const AssigneeSelect = ({ issue }: { issue: Issue }) => {
+	const { data: users, error, isLoading } = useUsers();
 
 	if (isLoading) {
 		return <Skeleton />;
 	}
 
 	if (error) {
-		return null;		
+		return null;
 	}
 
-	const assignIssue = async (userId: string) => {
+	const assignIssue = async (userId: string): Promise<void> => {
 		try {
 			await axios.patch(
 				"/api/issues/" + issue.id,
-				{assignedToUserId: userId || null}
+				{ assignedToUserId: userId || null }
 			)
 		} catch (error) {
 			toast.error("Changes could not be saved.");
@@ -36,12 +31,12 @@ export const AssigneeSelect = ({issue}: {issue: Issue}) => {
 
 	return (
 		<>
-			<Select.Root defaultValue="apple" onValueChange={assignIssue}>
+			<Select.Root defaultValue={issue.assignedToUserId || ""} onValueChange={assignIssue}>
 				<Select.Trigger placeholder="Assign..." />
 				<Select.Content>
 					<Select.Group>
 						<Select.Label>Suggestions</Select.Label>
-						{users!.map(user => {
+						{users?.map(user => {
 							return (
 								<Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
 							)
@@ -52,3 +47,10 @@ export const AssigneeSelect = ({issue}: {issue: Issue}) => {
 		</>
 	)
 }
+
+const useUsers = () => useQuery<User[]>({
+	queryKey: ['user'],
+	queryFn: () => axios.get("/api/users").then(res => res.data),
+	staleTime: 60 * 1000,
+	retry: 3
+})
