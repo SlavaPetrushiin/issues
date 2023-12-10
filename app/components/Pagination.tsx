@@ -4,13 +4,13 @@ import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRigh
 import { Button, Flex, Text } from '@radix-ui/themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-interface IPagging {
+interface IPagination {
 	itemCount: number;
 	pageSize: number;
 	currentPage: number;
 }
 
-const Pagging = ({ currentPage, itemCount, pageSize }: IPagging) => {
+const Pagination = ({ currentPage, itemCount, pageSize }: IPagination) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const countPage = Math.ceil(itemCount / pageSize);
@@ -64,4 +64,4 @@ const Pagging = ({ currentPage, itemCount, pageSize }: IPagging) => {
 	)
 }
 
-export default Pagging
+export default Pagination

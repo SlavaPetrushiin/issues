@@ -14,14 +14,26 @@ const STATUS_FILTER: { label: string, value: Status | "ALL" }[] = [
 
 const IssueFilter = () => {
 	const router = useRouter()
+	const searchParams = useSearchParams();
+	const status = searchParams.get('status') || STATUS_FILTER[0].value;
 
 	const handleChangeFilter = (status: Status | "ALL") => {
-		const query = status === "ALL" ? "" : `?status=${status}`;
+		const params = new URLSearchParams();
+		const allStatuses = Object.values(Status);
+
+		if (allStatuses.some(s => s === status)) {
+			params.append('status', status);
+		}
+		if (searchParams.get('orderBy')) {
+			params.append('orderBy', searchParams.get('orderBy')!);
+		}
+
+		const query = params.size ? "?" + params.toString() : '';
 		router.push('/issues' + query);
 	}
 
 	return (
-		<Select.Root defaultValue={STATUS_FILTER[0].value} onValueChange={handleChangeFilter}>
+		<Select.Root defaultValue={status} onValueChange={handleChangeFilter}>
 			<Select.Trigger placeholder="Filter by status..." />
 			<Select.Content>
 				<Select.Group>
@@ -40,4 +52,4 @@ const IssueFilter = () => {
 	)
 }
 
-export default IssueFilter
+export default IssueFilter;

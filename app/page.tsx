@@ -1,4 +1,4 @@
-import Pagging from './components/Pagging'
+import Pagging from './components/Pagination'
 
 export default function Home({
   searchParams,
