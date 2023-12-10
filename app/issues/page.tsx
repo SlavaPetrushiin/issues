@@ -4,7 +4,6 @@ import IssueActions from './_components/IssueActions'
 import { IssueStatusBadge, Link as CustomLink } from '@/app/components';
 import { Issue, Status } from '@prisma/client';
 import Link from 'next/link';
-import classNames from 'classnames';
 import { ArrowUpIcon } from '@radix-ui/react-icons';
 
 interface ISearchParamsProps {
@@ -21,19 +20,25 @@ interface IColumn {
 
 const IssuesPage = async ({ searchParams }: { searchParams: ISearchParamsProps }) => {
 	const statuses = Object.values(Status);
-	const status = statuses.includes(searchParams.status)
-		? searchParams.status
-		: undefined;
 	const columns: IColumn[] = [
 		{ label: "Title", value: "title", className: "" },
 		{ label: "Status", value: "status", className: "hidden md:table-cell" },
 		{ label: "Created", value: "createdAt", className: "hidden md:table-cell" }
 	]
 
+	//Params for request
+	const status = statuses.includes(searchParams.status)
+		? searchParams.status
+		: undefined;
+	const orderBy = columns.find((c) => c.value === searchParams.orderBy)
+		? {[searchParams.orderBy]: "asc"}
+		: undefined
+
 	const issues = await prisma.issue.findMany({
 		where: {
 			status
-		}
+		},
+		orderBy
 	});
 
 	return (
@@ -49,7 +54,7 @@ const IssuesPage = async ({ searchParams }: { searchParams: ISearchParamsProps }
 										<Link href={{
 											query: { ...searchParams, orderBy: column.value }
 										}}>{column.label}</Link>
-										{column.value === searchParams.orderBy && <ArrowUpIcon className='inline' /> }
+										{column.value === searchParams.orderBy && <ArrowUpIcon className='inline' />}
 									</Table.ColumnHeaderCell>
 
 								)
