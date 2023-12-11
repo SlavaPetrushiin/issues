@@ -1,3 +1,4 @@
+import LatestIssues from './LatestIssues';
 import Pagging from './components/Pagination'
 
 export default function Home({
@@ -9,7 +10,7 @@ export default function Home({
 
   return (
     <div>
-      <Pagging currentPage={currentPage} pageSize={10} itemCount={100} />
+      <LatestIssues />
     </div>
   )
 }
