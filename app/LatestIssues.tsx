@@ -1,5 +1,5 @@
 import prisma from '@/prisma/client'
-import { Avatar, Card, Flex, Table, Text } from '@radix-ui/themes'
+import { Avatar, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
 import React from 'react'
 import { IssueStatusBadge } from './components'
 
@@ -14,6 +14,7 @@ const LatestIssues = async () => {
 
 	return (
 		<Card>
+			<Heading size="4" mb="5">Latest Issues</Heading>
 			<Table.Root>
 				<Table.Body>
 					{latestIssues.map(issue => (
@@ -22,7 +23,7 @@ const LatestIssues = async () => {
 								<Flex justify="between">
 									<Flex direction="column" gap="1" align="start">
 										<Text>{issue.title}</Text>
-										<Text>{new Date(issue.createdAt).toLocaleDateString() }</Text>
+										<Text>{new Date(issue.createdAt).toLocaleDateString()}</Text>
 										<IssueStatusBadge status={issue.status} />
 									</Flex>
 									<Avatar

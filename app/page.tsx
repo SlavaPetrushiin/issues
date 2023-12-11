@@ -1,16 +1,32 @@
+import prisma from '@/prisma/client';
+import IssueSummary from './IssueSummary';
 import LatestIssues from './LatestIssues';
-import Pagging from './components/Pagination'
 
-export default function Home({
-  searchParams,
-}: {
-  searchParams: { page: string }
-}) {
-  const currentPage = searchParams.page ? parseInt(searchParams.page) : 1;
+
+const Dashboard = async () => {
+  // const issuesCount = await prisma.issue.groupBy({
+  //   by: "status",
+  //   _count: {
+  //     status: true,
+  //   },
+  // })
+
+  const open = await prisma.issue.count({
+    where: { status: 'OPEN' },
+  });
+  const inProgress = await prisma.issue.count({
+    where: { status: 'IN_PROGRESS' },
+  });
+  const closed = await prisma.issue.count({
+    where: { status: 'CLOSED' },
+  });
 
   return (
     <div>
+      <IssueSummary closed={closed} inProgress={inProgress} open={open} />
       <LatestIssues />
     </div>
   )
 }
+
+export default Dashboard
