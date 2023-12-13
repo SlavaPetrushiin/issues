@@ -1,6 +1,7 @@
 import prisma from '@/prisma/client';
 import IssueSummary from './IssueSummary';
 import LatestIssues from './LatestIssues';
+import { Flex, Grid } from '@radix-ui/themes';
 
 
 const Dashboard = async () => {
@@ -22,10 +23,12 @@ const Dashboard = async () => {
   });
 
   return (
-    <div>
-      <IssueSummary closed={closed} inProgress={inProgress} open={open} />
+    <Grid columns={{ initial: "1", md: "2" }} gap="5">
+      <Flex direction="column" gap="5">
+        <IssueSummary closed={closed} inProgress={inProgress} open={open} />
+      </Flex>
       <LatestIssues />
-    </div>
+    </Grid>
   )
 }
 
