@@ -3,6 +3,7 @@ import IssueSummary from './IssueChart';
 import LatestIssues from './LatestIssues';
 import { Flex, Grid } from '@radix-ui/themes';
 import ChartSummary from './ChartSummary';
+import { Metadata } from 'next';
 
 
 const Dashboard = async () => {
@@ -23,8 +24,6 @@ const Dashboard = async () => {
     where: { status: 'CLOSED' },
   });
 
-  console.log({open, inProgress, closed});
-
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap="5">
       <Flex direction="column" gap="5">
@@ -37,3 +36,8 @@ const Dashboard = async () => {
 }
 
 export default Dashboard
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Dashboard',
+  description: 'View a summary of project issues'
+};
